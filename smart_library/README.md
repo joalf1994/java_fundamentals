@@ -8,9 +8,8 @@ Permite el control eficiente de libros, usuarios y préstamos, con un enfoque en
 
 ## Conceptos implementados
 - Programación Orientada a Objetos (POO)
-- Collections (Listas, Sets, Mapas)
-- Manejo de Excepciones
-- Control de Stock de Ejemplares
+- Collections (List, ArrayList, Sets, HashSets)
+- Manejo de Excepciones (LibroNoDisponibleException, LibroNoEncontradoException)
 
 ## Funcionalidades
 - Registro de autores.
