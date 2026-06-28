@@ -1,6 +1,6 @@
 package com.jbobadilla.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Class Transaccion
@@ -13,19 +13,26 @@ import java.time.LocalDate;
 
 public class Transaccion {
     private int id;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
     private double monto;
     private TipoTransaccion tipoTransaccion;
 
+    private static int countTransac = 0;
+
+
     // Constructor
-    public Transaccion(int id, LocalDate fecha, double monto, TipoTransaccion tipoTransaccion) {
-        this.id = id;
+    public Transaccion(LocalDateTime fecha, double monto, TipoTransaccion tipoTransaccion) {
+        this(monto, tipoTransaccion);
         this.fecha = fecha;
+    }
+
+    public Transaccion(double monto, TipoTransaccion tipoTransaccion) {
+        countTransac++;
+        this.id = countTransac;
+        this.fecha = LocalDateTime.now();
         this.monto = monto;
         this.tipoTransaccion = tipoTransaccion;
     }
-
-    public Transaccion() {}
 
     // Getters y Setters
     public int getId() {
@@ -36,11 +43,11 @@ public class Transaccion {
         this.id = id;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
@@ -58,5 +65,15 @@ public class Transaccion {
 
     public void setTipoTransaccion(TipoTransaccion tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "id=" + id +
+                ", fecha=" + fecha +
+                ", monto=" + monto +
+                ", tipoTransaccion=" + tipoTransaccion +
+                '}';
     }
 }

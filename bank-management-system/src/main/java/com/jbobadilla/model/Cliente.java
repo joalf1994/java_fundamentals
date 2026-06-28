@@ -1,5 +1,8 @@
 package com.jbobadilla.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class cliente
  * <p>
@@ -17,6 +20,8 @@ public class Cliente {
     private String apellido;
     private String email;
 
+    private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+
     // Constructor
     public Cliente(int id, String dni, String nombre, String apellido, String email) {
         this.id = id;
@@ -29,7 +34,24 @@ public class Cliente {
     public Cliente() {}
 
     // Métodos adicionales
+    public void addCuenta(Cuenta cuenta) {
+        cuentas.add(cuenta);
+        cuenta.setCliente(this);
+    }
 
+    public List<Cuenta> getCuentas() {
+        return cuentas;
+    }
+
+    public void delCuenta(String nroCuenta) {
+        for (Cuenta cuenta : cuentas) {
+            if (cuenta.getNroCuenta().equals(nroCuenta)) {
+                cuentas.remove(cuenta);
+                break;
+            }
+        }
+
+    }
 
     // Getters y Setters
     public int getId() {
@@ -63,4 +85,16 @@ public class Cliente {
         this.email = email;
     }
 
+
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", dni='" + dni + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
