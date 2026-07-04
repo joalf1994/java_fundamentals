@@ -1,5 +1,8 @@
 package com.jbobadilla.model;
 
+import com.jbobadilla.exception.MontoInvalidoException;
+import com.jbobadilla.exception.SaldoInsuficienteException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +52,7 @@ public class Cuenta {
             // actualiza el saldo de la cuenta
             saldo += monto;
         } else {
-            throw new IllegalArgumentException("El monto debe ser mayor que 0");
+            throw new MontoInvalidoException("El monto a depositar debe ser mayor a 0");
         }
     }
 
@@ -61,7 +64,7 @@ public class Cuenta {
             // actualiza el saldo de la cuenta
             saldo -= monto;
         } else
-            throw new IllegalArgumentException("El monto a retirar es mayor que el saldo disponible");
+            throw new SaldoInsuficienteException("No hay saldo suficiente");
     }
 
     public void transferir(Cuenta cuentaDestino, double monto) {

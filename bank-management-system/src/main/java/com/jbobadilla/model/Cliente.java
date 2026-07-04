@@ -1,5 +1,7 @@
 package com.jbobadilla.model;
 
+import com.jbobadilla.exception.CuentaNoExisteException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +46,16 @@ public class Cliente {
     }
 
     public void delCuenta(String nroCuenta) {
+        boolean cuentaEncontrada = false;
         for (Cuenta cuenta : cuentas) {
             if (cuenta.getNroCuenta().equals(nroCuenta)) {
                 cuentas.remove(cuenta);
+                cuentaEncontrada = true;
                 break;
             }
+        }
+        if (!cuentaEncontrada) {
+            throw new CuentaNoExisteException("Cuenta no encontrada");
         }
 
     }
