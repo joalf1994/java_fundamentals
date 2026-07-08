@@ -2,10 +2,14 @@ package com.jbobadilla.model;
 
 import com.jbobadilla.exception.MontoInvalidoException;
 import com.jbobadilla.exception.SaldoInsuficienteException;
+import com.jbobadilla.exception.TransaccionNoExisteException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class Cuenta
@@ -17,6 +21,7 @@ import java.util.List;
  */
 
 public class Cuenta {
+    private static final Logger log = LoggerFactory.getLogger(Cuenta.class);
     private int id;
     private String nroCuenta;
     private double saldo;
@@ -72,6 +77,37 @@ public class Cuenta {
         cuentaDestino.depositar(monto);
     }
 
+    // Obtener depositos
+    public List<Transaccion> obtenerDepositos() {
+        return transacciones.stream()
+                .filter(auxTransaccion -> auxTransaccion.getTipoTransaccion() == TipoTransaccion.DEPOSITO)
+                .toList();
+    }
+
+    // Obeneter Retiros
+    public List<Transaccion> obtenerRetiros() {
+        return transacciones.stream()
+                .filter(auxTransaccion -> auxTransaccion.getTipoTransaccion() == TipoTransaccion.RETIRO)
+                .toList();
+    }
+
+    // Obtener Transferencias
+    public List<Transaccion> obtenerTransferencias() {
+        return transacciones.stream()
+                .filter(auxTransaccion -> auxTransaccion.getTipoTransaccion() == TipoTransaccion.TRANSFERENCIA)
+                .toList();
+    }
+
+    public void buscarTransacciones(int idTransaccion) {
+        Optional<Transaccion> transaccion = transacciones.stream()
+                .filter(auxTransaccion -> auxTransaccion.getId() == idTransaccion)
+                .findFirst();
+        if (transaccion.isPresent()) {
+            log.info("Transacción encontrada: " + transaccion.get());
+        } else {
+            throw new TransaccionNoExisteException("La transacción no existe");
+        }
+    }
     // Getters y Setters
     public int getId() {
         return id;
